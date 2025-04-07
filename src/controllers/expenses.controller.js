@@ -36,7 +36,7 @@ const getExpenseByFilter = async (req, res) => {
     await expensesService.getExpenseByFilterService(expenseFilter);
 
   if (!expenses) {
-    return res.sendStatus(404).json('Expense not Found');
+    return res.sendStatus(404);
   }
   res.status(200).json(expenses);
 };
@@ -77,13 +77,13 @@ const createExpense = async (req, res) => {
 };
 
 const updateExpense = async (req, res) => {
-  const id = Number(req.params.expenseId);
-  const userId = Number(req.body.userId);
+  const id = req.params.expenseId ? Number(req.params.expenseId) : null;
+  const userId = req.body.userId ? Number(req.body.userId) : null;
   const spentAt = req.body.spentAt ? new Date(req.body.spentAt) : null;
-  const title = req.body.title;
-  const amount = Number(req.body.amount);
-  const category = req.body.category;
-  const note = req.body.note;
+  const title = req.body.title ? req.body.title : null;
+  const amount = req.body.amount ? Number(req.body.amount) : null;
+  const category = req.body.category ? req.body.category : null;
+  const note = req.body.note ? req.body.note : null;
 
   const expenseData = {
     ...(id && { id }),
